@@ -111,6 +111,7 @@ public struct ImageMetadata {
     fileprivate var mode: FusumaMode = .library
     
     public var availableModes: [FusumaMode] = [.library, .camera]
+    public var defaultMode: Int = 0
     public var cameraPosition = AVCaptureDevice.Position.back
 
     @IBOutlet weak var photoLibraryViewerContainer: UIView!
@@ -196,7 +197,9 @@ public struct ImageMetadata {
             fatalError("the variable of availableModes should have unique elements.")
         }
         
-        changeMode(availableModes[0], isForced: true)
+        let mode = defaultMode < availableModes.count ? defaultMode : 0
+        
+        changeMode(availableModes[mode], isForced: true)
         
         var sortedButtons = [UIButton]()
         
