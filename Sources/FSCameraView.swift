@@ -115,7 +115,9 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
         
         flashConfiguration()
         
-        self.startCamera()
+        DispatchQueue.main.async {
+            self.startCamera()
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(FSCameraView.willEnterForegroundNotification(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
