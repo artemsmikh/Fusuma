@@ -174,6 +174,8 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
 
     @IBAction func shotButtonPressed(_ sender: UIButton) {
         
+        if !cameraIsAvailable { return }
+        
         guard let imageOutput = imageOutput else {
             
             return
@@ -186,10 +188,6 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
             imageOutput.captureStillImageAsynchronously(from: videoConnection!) { (buffer, error) -> Void in
                 
                 self.stopCamera()
-                
-                guard buffer != nil else {
-                    return
-                }
                 
                 guard let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer!),
                     let image = UIImage(data: data),
