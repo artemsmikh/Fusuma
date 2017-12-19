@@ -187,6 +187,10 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
                 
                 self.stopCamera()
                 
+                guard buffer != nil else {
+                    return
+                }
+                
                 guard let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer!),
                     let image = UIImage(data: data),
                     let cgImage = image.cgImage,
