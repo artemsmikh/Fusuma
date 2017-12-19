@@ -162,6 +162,8 @@ final class FSVideoCameraView: UIView {
     
     @IBAction func flipButtonPressed(_ sender: UIButton) {
         
+        guard cameraIsAvailable else { return }
+        
         guard let session = session else { return }
         
         session.stopRunning()
@@ -255,11 +257,7 @@ fileprivate extension FSVideoCameraView {
     
     func toggleRecording() {
         
-        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
-        
-        guard status == AVAuthorizationStatus.authorized else {
-            return
-        }
+        guard cameraIsAvailable else { return }
         
         guard let videoOutput = videoOutput else { return }
         
@@ -380,5 +378,17 @@ fileprivate extension FSVideoCameraView {
             
             return
         }
+    }
+    
+    var cameraIsAvailable: Bool {
+        
+        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        if status == AVAuthorizationStatus.authorized {
+            
+            return true
+        }
+        
+        return false
     }
 }
