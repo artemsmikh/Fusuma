@@ -255,6 +255,12 @@ fileprivate extension FSVideoCameraView {
     
     func toggleRecording() {
         
+        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        guard status == AVAuthorizationStatus.authorized else {
+            return
+        }
+        
         guard let videoOutput = videoOutput else { return }
         
         self.isRecording = !self.isRecording
